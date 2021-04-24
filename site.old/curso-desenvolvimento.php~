@@ -1,0 +1,197 @@
+<?php include("includes/config.php"); ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+        <?php echo $metatags ?>
+        <title><?php echo $site_title ?> - Cursos de Desenvolvimento de Software</title>
+        <?php echo $stylesheets ?>
+        <?php echo $head_scripts ?>
+        <link type="text/css" rel="stylesheet" href="css/dhtmlgoodies_calendar.css" media="screen"></link>
+        <script type="text/javascript" src="scripts/dhtmlgoodies_calendar.js"></script>
+        <script type="text/javascript" src="scripts/JavaScriptUtil.js"></script>
+        <script type="text/javascript" src="scripts/Parsers.js"></script>
+        <script type="text/javascript" src="scripts/InputMask.js"></script>
+        <script type="text/javascript">
+            function mask_user() {
+                var telefoneMask = new InputMask("(##) ####-####", "id_telefone");
+            }
+        </script>
+
+        <style>
+            #contato_desenvolvimento{
+                padding: 0px 10px;
+            }
+            #contato_desenvolvimento label{
+                font-size: 11px;
+                display: block;
+                margin: 0px 0px 5px 0px;
+                color: #666666;
+            }
+            #contato_desenvolvimento .input_text:focus{
+                border: 1px solid #666666;
+            }
+            #contato_desenvolvimento .input_text{
+                width: 100%;
+                background: url(css/images/field_bg.gif) repeat;
+                border: 1px solid #1F1F1F;
+                color: #ffffff;
+                font-size: 11px;
+                padding: 2px 0px;
+            }
+            #contato_desenvolvimento textarea{
+                width: 100%;
+                height: 100px;
+                background: url(css/images/field_bg.gif) repeat;
+                border: 1px solid #1F1F1F;
+                color: #ffffff;
+                font-size: 11px;
+                padding: 2px 0px;
+            }
+            #submit{
+                background: #DF9E01;
+                border: none;
+                color: #000000;
+                font-size: 11px;
+                font-weight: bold;
+                padding: 2px 4px;
+                margin: 10px 0px 0px 0px;
+            }
+
+            .curso_button img{
+                border: 1px solid #000000;
+                vertical-align: middle;
+                padding: 10px;
+            }
+
+            .curso_button:hover img{
+                background: url(css/images/field_bg.gif);
+                border: 1px solid #666666;
+            }
+        </style>
+    </head>
+
+    <body>
+
+        <?php include("includes/menu.php"); ?>
+
+        <div id="cursos_desenvolvimento" class="centralizer inner_page">
+            <h1>
+                <div style="background: url(css/images/title_cursos_desenvolvimento_software.png) no-repeat; width: 22px; height: 334px">Cursos de Desenvolvimento de Software</div>
+            </h1>
+
+            <div class="content">
+                <div id="left_column">
+                    <h2 style="color: #DF9E01; border-color: #ffffff">Conheça os nossos cursos</h2>
+                    <div style="text-align: center">
+                        <a class="curso_button" href="#csharp" style="padding: 0px 10px 0px 0px"><img src="css/images/csharp_button.gif" /></a>
+                        <a class="curso_button" href="#webasp"><img src="css/images/webaspnet_button.gif" /></a>
+                    </div>
+
+                    <a name="csharp"> </a>
+                    <h2 style="padding-top: 40px">C#, ORIENTAÇÃO A OBJETOS E UML BÁSICO</h2>
+                    <p>Para conhecer melhor o conteúdo veja a <a href="curso-desenvolvimento-programa-csharp.php?height=400&width=520" class="thickbox" style="color: #DF9E01"><b>EMENTA DO CURSO</b></a>. A carga horária é de <span style="color: #DF9E01; font-style: bold">40 horas</span>.</p>
+
+                    <h3 style="margin: 20px 0px 10px 0px">Próximas Turmas</h3>
+
+                    <div style="background: #DF9E01; padding: 10px 0px; margin: 0px 20px 20px 20px">
+                        <h3 style="text-align: center; color: #000000; font-size: 14px; margin-bottom: 0px">ATENÇÃO!</h3>
+                        <p style="color: #000000; font-size: 12px; text-align: center">
+                            A <b>Turma 1</b> que teria início no dia <b>21/09/2009</b> foi adiada e terá início no dia <b>09/11/2009</b>.
+                        </p>
+                    </div>
+
+                    <table cellpadding="0" cellspacing="0">
+                        <tr>
+                            <th>Turma</th>
+                            <th>Início</th>
+                            <th>Fim</th>
+                            <th>Horário</th>
+                        </tr>
+                        <tr>
+                            <td class="module separator"><span style="color: #DF9E01">Turma 1</span></td>
+                            <td class="separator">09/11/2009</td>
+                            <td class="separator">20/11/2009</td>
+                            <td class="separator_last_column">De Segunda à Sexta das 19:00 às 23:00</td>
+                        </tr>
+                        <tr>
+                            <td class="module separator"><span style="color: #DF9E01">Turma 2<br/><span style="font-size: 9px">(MATRÍCULAS ENCERRADAS)</span></span></td>
+                            <td class="separator">26/09/2009</td>
+                            <td class="separator">24/10/2009</td>
+                            <td class="separator_last_column">Aos Sábados das 09:00 às 18:00</td>
+                        </tr>
+                        <tr>
+                            <td class="module separator"><span style="color: #DF9E01">Turma 3</span></td>
+                            <td class="separator">31/10/2009</td>
+                            <td class="separator">28/11/2009</td>
+                            <td class="separator_last_column">Aos Sábados das 09:00 às 18:00</td>
+                        </tr>
+                        <tr style="height: 66px; background: url(css/images/ferias_bg.gif) repeat-x">
+                            <td class="module separator" style="border-right: 1px dashed #006fa7; vertical-align: middle; background: url(css/images/ferias_bg1.gif) no-repeat"><span style="color: #00202a">Turma de Férias</span></td>
+                            <td class="separator" style="border-right: 1px dashed #006fa7; color: #00202a">09/01/2010</td>
+                            <td class="separator" style="border-right: 1px dashed #006fa7;color: #00202a">06/02/2010</td>
+                            <td class="separator_last_column" style="color: #00202a; background: url(css/images/ferias_bg2.gif) 110px 0px no-repeat">Aos Sábados das 09:00 às 18:00</td>
+                        </tr>
+                    </table>
+
+                    <h3 style="margin: 20px 0px 10px 0px">MATRÍCULA</h3>
+                    <p>Pedimos que todos os interessados preencham a <a href="form_curso_csharp.php?KeepThis=true&TB_iframe=true&height=460&width=560" class="thickbox" style="color: #DF9E01"><b>FICHA DE PRÉ-MATRÍCULA</b></a>, para que nossa equipe possa entrar em contato posteriormente com a finalidade de efetuar a matrícula definitiva.</p>
+
+                    <a name="webasp"> </a>
+                    <h2 style="padding-top: 40px">Desenvolvimento Web com ASP.NET</h2>
+                    <p>Carga horária: <span style="color: #DF9E01; font-style: bold">40 horas</span></p>
+
+                    <h3 style="margin: 20px 0px 10px 0px">Próximas Turmas</h3>
+
+                    <table cellpadding="0" cellspacing="0">
+                        <tr>
+                            <th>Turma</th>
+                            <th>Início</th>
+                            <th>Fim</th>
+                            <th>Horário</th>
+                        </tr>
+                        <tr style="height: 66px; background: url(css/images/ferias_bg.gif) repeat-x">
+                            <td class="module separator" style="border-right: 1px dashed #006fa7; vertical-align: middle; background: url(css/images/ferias_bg1.gif) no-repeat"><span style="color: #00202a">Turma de Férias</span></td>
+                            <td class="separator" style="border-right: 1px dashed #006fa7; color: #00202a">11/01/2010</td>
+                            <td class="separator" style="border-right: 1px dashed #006fa7;color: #00202a">22/01/2010</td>
+                            <td class="separator_last_column" style="color: #00202a; background: url(css/images/ferias_bg2.gif) 110px 0px no-repeat">De Segunda à Sexta das 19:00 às 23:00</td>
+                        </tr>
+                    </table>
+
+                    <h3 style="margin: 20px 0px 10px 0px">MATRÍCULA</h3>
+                    <p>Pedimos que todos os interessados preencham a <a href="form_curso_webaspnet.php?KeepThis=true&TB_iframe=true&height=460&width=560" class="thickbox" style="color: #DF9E01"><b>FICHA DE PRÉ-MATRÍCULA</b></a>, para que nossa equipe possa entrar em contato posteriormente com a finalidade de efetuar a matrícula definitiva.</p>
+                </div>
+                <div id="right_column">
+                    <h3>Horário de Atendimento</h3>
+                    <p>Das 10:00 às 20:00</p>
+                    <p>Estamos atendendo às dúvidas também através do e-mail: imejr (arroba) ime.usp.br ou pelo telefone (11) 3091-6241.</p>
+
+                    <h3 style="margin: 20px 0px 10px 0px">Local do Treinamento</h3>
+                    <p>Av. Bernardino de Campos, 48<br />Cj 30 - Paraíso<br />(a 30 metros do Shopping Pátio Paulista, entre as estações Brigadeiro e Paraíso do metrô)</p>
+                    <a href="images/ofcourse_map.jpg?height=441&width=760" class="thickbox" style="border: none;"><img src="images/ofcourse_map.jpg" style="border: none; width: 210px; padding: 0px 10px" /></a>
+                    <p style="font-style: italic; text-align: center; font-size: 10px">(clique na imagem para ampliar)</p>
+
+
+                    <h3 style="margin: 20px 0px 10px 0px">Contato</h3>
+                    <form id="contato_desenvolvimento" action="curso-desenvolvimento-contato.php" method="POST" target="form_contato">
+                        <label>Nome:</label>
+                        <input type="text" name="nome" class="input_text" />
+                        <label>E-mail:</label>
+                        <input type="text" name="email" class="input_text" />
+                        <label>Telefone:</label>
+                        <input id="id_telefone" type="text" name="telefone" class="input_text" />
+                        <label>Mensagem:</label>
+                        <textarea name="mensagem"></textarea>
+                        <p style="padding: 0px; margin: 0px; text-align: right"><input id="submit" type="submit" value="enviar" /></p>
+                    </form>
+                    <iframe src="about:blank" name="form_contato" id="form_contato" style="visibility: hidden; width: 0px; height: 0px; border: none"></iframe>
+                </div>
+                <div class="cleaner"></div>
+            </div>
+
+            <div class="cleaner"></div>
+        </div>
+
+        <?php include("includes/footer.php"); ?>
+        <iframe onload="mask_user()" style="width:1px;height:1px;border:none; visibility: hidden" src="about:blank"></iframe>
+    </body>
+</html>

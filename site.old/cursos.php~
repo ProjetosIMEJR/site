@@ -1,0 +1,46 @@
+<?php
+require_once('includes/config.inc');
+require_once('includes/conexao.php');
+
+$conn = Conexao::conecta();
+?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+        <meta http-equiv="content-type" content="text/html; charset=iso-8859-1" />
+        <title><?php echo $site_title; ?></title>
+        <?php include('meta-stylesheets.php'); ?>
+
+        <link rel="stylesheet" type="text/css" href="css/cursos.css" />
+        <?php include('meta-javascript.php'); ?>
+    </head>
+    <body>
+        <div id="centralizer">
+            <?php include('header.php'); ?>
+            <?php include('main-menu.php'); ?>
+
+            <!-- Content Area - Begin -->
+            <div id="cursos" class="content inner-pages">
+                <div id="left-area">
+                    <h1>Cursos</h1>
+                    <div id="body" class="cursos-home">
+                        <ul>
+                            <li class="desenvolvimento"><a href="curso-desenvolvimento.php">Cursos de Desenvolvimento IMEjr (em parceria com a K19)</a></li>
+                            <li class="ingles"><a href="ingles/">Curso de Inglês IMEjr</a></li>
+                            <li class="espanhol"><a href="espanhol/">Curso de Espanhol IMEjr</a></li>
+	                    <li class="frances"><a href="frances/">Curso de FrancÃªsIMEjr</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div id="right-area">
+                    <?php include('schedule-widget.php'); ?>
+                </div>
+                <div class="cleaner"></div>
+            </div>
+            <!-- Content Area - End -->
+
+            <?php include('footer.php');?>
+        </div>
+    </body>
+</html>
+<?php Conexao::fecha_conexao($conn); ?>

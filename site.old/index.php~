@@ -1,0 +1,90 @@
+<?php
+
+require_once('includes/config.inc');
+require_once('includes/conexao.php');
+
+$conn = Conexao::conecta();
+?>
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+        <meta http-equiv="content-type" content="text/html; charset=iso-8859-1" />
+        <title><?php echo $site_title; ?></title>
+        <?php include('meta-stylesheets.php'); ?>
+
+        <link rel="stylesheet" type="text/css" href="css/home.css" />
+        <?php include('meta-javascript.php'); ?>
+
+        <!--<script type="text/javascript" src="js/flash-replace-1.01.js"></script>-->
+        <script type="text/javascript" src="js/home.js"></script>
+    </head>
+    <body>
+        <div id="centralizer">
+            <?php include('header.php'); ?>
+            <?php include('main-menu.php'); ?>
+
+            <!-- Content Area - Begin -->
+            <div id="home" class="content">
+                <div id="left-area">
+                    <div id="slide-container">
+                        <div id="slide-controller-bg">&nbsp;</div>
+                        <div id="slide-controller"></div>
+                    </div>
+                    <!--<div id="flash-element"></div>-->
+
+                    <div id="segundo-semestre-2010-container">
+                        <div>
+                            <div class="left">
+                                <h1>C# e Orientação a Objetos</h1>
+                                <ul>
+                                    <li><b>Integral - aos Domingos</b><br />12/09 ~ 10/10 das 09:00 às 18:00<br />Duração: 40 horas em 5 semanas</li>
+                                </ul>
+                            </div>
+                            <div class="right">
+                                <h1>Desenvolvimento Web com ASP.NET MVC</h1>
+                                <ul>
+                                    <li><b>Integral - aos Sábados</b><br />11/09 ~ 09/10 das 09:00 às 18:00<br />Duração: 40 horas em 5 semanas</li>
+                                </ul>
+                            </div>
+
+                            <div region="segundo-semestre-2010-footer">
+                                [ <a href="curso-desenvolvimento.php">saiba mais</a> ]
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="news-container">
+                        <div>
+                            <ul>
+                                <li><a href="http://www.k19.com.br/variaveis-de-ambiente/" target="blank">Variáveis de Ambiente</a></li>
+                                <li><a href="http://www.k19.com.br/hello-world-csharp/" target="blank">Hello World C#</a></li>
+                                <li><a href="http://www.k19.com.br/entrada-e-saida-padrao-em-c/" target="blank">Entrada e Saída Padrão em C#</a></li>
+                                <li><a href="http://www.k19.com.br/entrada-e-saida-de-arquivos-em-c/" target="blank">Entrada e Saída de Arquivos em C#</a></li>
+                                <li><a href="http://www.k19.com.br/leitura-e-escrita-de-arquivos-xml-em-c/" target="blank">Leitura e Escrita de arquivos XML em C#</a></li>
+                            </ul>
+                            <div region="news-footer">
+                                [ <a href="http://www.k19.com.br/artigos" target="blank">mais artigos</a> ]
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div id="right-area">
+                    <!--<div id="postit-container">
+                        <h2>titulo</h2>
+                        <ul>
+                            <li><b>data</b>periodo</li>
+                        </ul>
+                    </div>-->
+
+                    <?php include('schedule-widget.php'); ?>
+                </div>
+                <div class="cleaner"></div>
+            </div>
+            <!-- Content Area - End -->
+
+            <?php include('footer.php');?>
+        </div>
+    </body>
+</html>
+<?php Conexao::fecha_conexao($conn); ?>

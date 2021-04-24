@@ -1,0 +1,202 @@
+<?php include("includes/config.php"); ?>
+<?require'conexao.php';
+$conn=Conexao::conecta();
+function anti_injection($txt) {
+    return preg_replace("@(--|\#|\*|;|=)@s","",$txt);
+}
+
+if(isset($_POST["nome"])) {
+    $nome=anti_injection($_POST["nome"]);
+}
+if(isset($_POST["email"])) {
+    $email=anti_injection($_POST["email"]);
+}
+if(isset($_POST["telefone1"])) {
+    $telefone1=anti_injection($_POST["telefone1"]);
+}
+if(isset($_POST["telefone2"])) {
+    $telefone2=anti_injection($_POST["telefone2"]);
+}
+if(isset($_POST["cpf"])) {
+    $cpf=anti_injection($_POST["cpf"]);
+}
+if(isset($_POST["turma_csharp"])) {
+    $turma_csharp = anti_injection($_POST["turma_csharp"]);
+}
+if(isset($_POST["turma_aspnet"])) {
+    $turma_aspnet = anti_injection($_POST["turma_aspnet"]);
+}
+if(isset($_POST["turma_lab_aspnet"])) {
+    $turma_lab_aspnet = anti_injection($_POST["turma_lab_aspnet"]);
+}
+
+$unix_time = time();
+$ut_offset = -3.00 * 3600;
+$create_date = gmdate("Y-m-d H:i:s", $unix_time + $ut_offset);
+
+$to = $email;
+
+//$curso = ($turma == "turma1_csharp_02112009") ? "C#, Orientação a Objetos e UML Básico - Turma 1" : "C#, Orientação a Objetos e UML Básico - Turma 2";
+
+$cursos = array();
+$cursos_str = '';
+
+if(isset($turma_csharp)) {
+    $cursos[] = "C# e Orientação a Objetos";
+}
+if(isset($turma_aspnet)) {
+    $cursos[] = "Desenvolvimento Web com ASP.NET MVC";
+}
+if(isset($turma_lab_aspnet)) {
+    $cursos[] = "Laboratório ASP.NET MVC";
+}
+
+foreach($cursos as $curso) {
+    $cursos_str .= $curso . ', ';
+}
+$cursos_str = substr($cursos_str, 0, strlen($cursos_str) - 2);
+
+$primeiro_nome = explode(' ', $nome);
+
+$body = "Olá $primeiro_nome[0],
+
+Obrigado pelo cadastro de interesse nos cursos $cursos_str.
+
+Todos os nossos cursos são dados em laboratório com uma máquina por aluno. O 
+certificado e a apostila estão inclusos no valor de cada treinamento. Nos 
+intervalos das aulas, temos coffee break com lanche, suco, refrigerante e café.
+
+O calendário de turmas e as demais informações sobre cada curso estão no nosso
+site: http://www.ime.usp.br/imejr/curso-desenvolvimento.php.
+
+Segue abaixo os valores dos nossos cursos:
+
+=================================================
+CURSO: Desenvolvimento Web com ASP .NET MVC
+Valores e formas de pagamento:
+
+- À vista: R$ 740,00
+- 2x: R$ 400,00
+- 3x: R$ 286,00
+
+Próximas turmas:
+20/02/2010 - 20/03/2010    Aos Sábados das 09:00 às 18:00
+15/03/2010 - 26/03/2010    Segunda à Sexta das 19:00 às 23:00
+
+=================================================
+CURSO: C# e Orientação a Objetos
+Valores e formas de pagamento:
+
+- À vista: R$ 590,00
+- 2x: R$ 325,00
+- 3x: R$ 236,00
+
+Próximas turmas:
+21/02/2010 - 21/03/2010    Aos Domingos das 09:00 às 18:00
+
+=================================================
+CURSO: Laboratório ASP.NET MVC Avançado
+Valores e formas de pagamento:
+
+- À vista: R$ 555,00
+- 2x: R$ 307,00
+- 3x: R$ 225,00
+
+Próximas turmas:
+27/03/2010 - 10/04/2010    Aos Sábados das 09:00 às 18:00
+
+=================================================
+
+O pagamento pode ser efetuado por boleto ou por cheque, boletos são enviados 
+diretamento por email e os cheques devem ser entregues pessoalmente na USP.
+
+Qualquer dúvida entre em contato conosco neste email ou através do telefone 
+3091-6241.
+
+Atenciosamente,
+Marcelo Martins
+
+-- 
+Empresa Júnior de Informática, Matemática e Estatística da USP
+tel: (11) 3091-6241
+imejr@ime.usp.br
+http://www.ime.usp.br/imejr";
+
+// mail( $to  , $subject  , $body  , $headers);
+exec("/home/specmac/imejr/sendmail.pl ".$to." '".$body."'");
+
+
+$to = "imejr.usp@gmail.com";
+$body = "Nome: $nome
+E-mail: $email
+Telefone 1: $telefone1
+Telefone 2: $telefone2
+Turma C#: $turma_csharp
+Turma ASP.NET: $turma_aspnet
+Turma Lab: $turma_lab_aspnet";
+
+exec("/home/specmac/imejr/sendmail.pl " . $to . " '" . $body . "'");
+
+
+$query = "SELECT * FROM cadastrados WHERE cpf = '$cpf'";
+$result = mysql_query($query);
+$row = mysql_fetch_assoc($result);
+
+if(mysql_num_rows($result) != 0) {
+    $cadastrado_id = $row['id'];
+    $set_str = '';
+
+    if(isset($telefone1) && !empty($telefone1)) {
+        $set_str .= "telefone1='$telefone1', ";
+    }
+    if(isset($telefone2) && !empty($telefone2)) {
+        $set_str .= "telefone2='$telefone2', ";
+    }
+    if(isset($email) && !empty($email)) {
+        $set_str .= "email='$email', ";
+    }
+    $set_str = substr($set_str, 0, strlen($set_str) - 2);
+
+    if(!empty($set_str)) {
+        $query = "UPDATE cadastrados SET $set_str WHERE id=$cadastrado_id";
+        $result = mysql_query($query) or die('Erro: ' . mysql_error());
+    }
+}
+else {
+    $query = "INSERT INTO cadastrados (nome, email, telefone1, telefone2, cpf, data_cadastro) VALUES ('$nome', '$email', '$telefone1', '$telefone2', '$cpf', '$create_date')";
+    $result = mysql_query($query) or die('Erro: ' . mysql_error());
+    $cadastrado_id = mysql_insert_id();
+}
+
+if(isset($turma_csharp)) {
+    $query = "INSERT INTO interesses (cadastrado_id, curso, turma) VALUES (" . $cadastrado_id . ", 'csharp', '$turma_csharp')";
+    mysql_query($query) or die('Erro: ' . mysql_error());
+}
+
+if(isset($turma_aspnet)) {
+    $query = "INSERT INTO interesses (cadastrado_id, curso, turma) VALUES (" . $cadastrado_id . ", 'aspnet', '$turma_aspnet')";
+    mysql_query($query) or die('Erro: ' . mysql_error());
+}
+
+if(isset($turma_lab_aspnet)) {
+    $query = "INSERT INTO interesses (cadastrado_id, curso, turma) VALUES (" . $cadastrado_id . ", 'lab_aspnet', '$turma_lab_aspnet')";
+    mysql_query($query) or die('Erro: ' . mysql_error());
+}
+
+Conexao::fecha_conexao($conn);?>
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+        <?php echo $metatags ?>
+        <title><?php echo $site_title ?></title>
+        <?php echo $stylesheets ?>
+        <?php echo $head_scripts ?>
+    </head>
+
+    <body style="padding: 0px 10px; text-align: center">
+        <p style="font-size: 11px; color: #cccccc; font-family: Arial, Helvetica, sans-serif;">Seus dados foram enviados com sucesso.</p>
+        <p style="font-size: 11px; color: #cccccc; font-family: Arial, Helvetica, sans-serif;">Em breve entraremos em contato.</p>
+    </body>
+</html>
+

@@ -1,0 +1,102 @@
+<?php
+require_once('includes/config.inc');
+require_once('includes/conexao.php');
+
+$conn = Conexao::conecta();
+?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+        <meta http-equiv="content-type" content="text/html; charset=iso-8859-1" />
+        <title><?php echo $site_title; ?></title>
+        <?php include('meta-stylesheets.php'); ?>
+
+        <link rel="stylesheet" href="css/core.css" type="text/css" />
+        <link rel="stylesheet" href="css/cupertino/jquery-ui.cupertino.css" type="text/css" />
+
+        <link rel="stylesheet" type="text/css" href="css/agenda.css" />
+        <?php include('meta-javascript.php'); ?>
+
+        <script type="text/javascript" src="js/jquery-ui-1.8rc3.custom.min.js"></script>
+        <script src="js/jMonthCalendar.js" type="text/javascript"></script>
+        <script src="js/agenda.js" type="text/javascript"></script>
+
+        <script type="text/javascript">
+            $().ready(function() {
+                var options = {
+                    onEventBlockOver: function(event) {
+                        $(event.target).children('span').css('display', 'inline');
+                    },
+                    onEventBlockOut: function(event) {
+                        $(event.target).children('span').css('display', 'none');
+                    },
+                    navLinks: {
+                        enableToday: false,
+                        enableNextYear: true,
+                        enablePrevYear: true,
+                        p:'&lsaquo; Anterior',
+                        n:'Próximo &rsaquo;',
+                        t:'Hoje',
+                        showMore: 'Show More'
+                    },
+                    dragableEvents: false
+                };
+
+                var events = [
+<?php
+$query = "SELECT *, UNIX_TIMESTAMP(data_inicio) AS data_inicio, UNIX_TIMESTAMP(data_fim) AS data_fim FROM turmas WHERE UNIX_TIMESTAMP(data_fim) > '" . time() . "' ORDER BY data_inicio LIMIT 0, 5";
+$result = mysql_query($query);
+$id = 1;
+$num_row = mysql_num_rows($result);
+
+while($row = mysql_fetch_assoc($result)) {
+    if(date('l', $row['data_inicio']) === 'Sunday' || date('l', $row['data_inicio']) === 'Saturday') {
+        $evento = $row['data_inicio'];
+        $evento_str = '';
+
+        for(; $evento <= $row['data_fim']; $evento = strtotime('+7 day', $evento)) {
+            $evento_str .= '{ "EventID": ' . $id . ', "StartDateTime": "' . date('Y-m-d', $evento) . '", "EndDateTime": "' . date('Y-m-d', $evento) . '", "Title": "' . $row['curso'] . '", "URL": "curso-desenvolvimento.php", "Description": "' . $row['dias'] . ' das ' . $row['horario'] . '", "className": "' . $row['grupo_curso'] . '" },';
+        }
+        $evento_str = substr($evento_str, 0, strlen($evento_str) - 1);
+        echo $evento_str;
+    }
+    else {
+        echo  '{ "EventID": ' . $id . ', "StartDateTime": "' . date('Y-m-d', $row['data_inicio']) . '", "EndDateTime": "' . date('Y-m-d', strtotime('+4 day', $row['data_inicio'])) . '", "Title": "' . $row['curso'] . '", "URL": "curso-desenvolvimento.php", "Description": "' . $row['dias'] . ' das ' . $row['horario'] . '", "className": "' . $row['grupo_curso'] . '" },';
+        echo '{ "EventID": ' . $id . ', "StartDateTime": "' . date('Y-m-d', strtotime('+7 day', $row['data_inicio'])) . '", "EndDateTime": "' . date('Y-m-d', $row['data_fim']) . '", "Title": "' . $row['curso'] . '", "URL": "curso-desenvolvimento.php", "Description": "' . $row['dias'] . ' das ' . $row['horario'] . '", "className": "' . $row['grupo_curso'] . '" }';
+    }
+
+    if($id != $num_row) {
+        echo ',';
+    }
+
+    $id++;
+}
+?>
+        ];
+
+        Date.CultureInfo={name:"en-US",englishName:"English (United States)",nativeName:"English (United States)",dayNames:["Domingo","Segunda","Terça","Quarta","Quinta","Sexta","Sábado"],abbreviatedDayNames:["Sun","Mon","Tue","Wed","Thu","Fri","Sat"],shortestDayNames:["Su","Mo","Tu","We","Th","Fr","Sa"],firstLetterDayNames:["S","M","T","W","T","F","S"],monthNames:["Janeiro","Fevereiro","Março","Abril","Maio","Junho","Julho","Agosto","Setembro","Outubro","Novembro","Dezembro"],abbreviatedMonthNames:["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"],amDesignator:"AM",pmDesignator:"PM",firstDayOfWeek:0,twoDigitYearMax:2029,dateElementOrder:"mdy",formatPatterns:{shortDate:"M/d/yyyy",longDate:"dddd, MMMM dd, yyyy",shortTime:"h:mm tt",longTime:"h:mm:ss tt",fullDateTime:"dddd, MMMM dd, yyyy h:mm:ss tt",sortableDateTime:"yyyy-MM-ddTHH:mm:ss",universalSortableDateTime:"yyyy-MM-dd HH:mm:ssZ",rfc1123:"ddd, dd MMM yyyy HH:mm:ss GMT",monthDay:"MMMM dd",yearMonth:"MMMM, yyyy"},regexPatterns:{jan:/^jan(uary)?/i,feb:/^feb(ruary)?/i,mar:/^mar(ch)?/i,apr:/^apr(il)?/i,may:/^may/i,jun:/^jun(e)?/i,jul:/^jul(y)?/i,aug:/^aug(ust)?/i,sep:/^sep(t(ember)?)?/i,oct:/^oct(ober)?/i,nov:/^nov(ember)?/i,dec:/^dec(ember)?/i,sun:/^su(n(day)?)?/i,mon:/^mo(n(day)?)?/i,tue:/^tu(e(s(day)?)?)?/i,wed:/^we(d(nesday)?)?/i,thu:/^th(u(r(s(day)?)?)?)?/i,fri:/^fr(i(day)?)?/i,sat:/^sa(t(urday)?)?/i,future:/^next/i,past:/^last|past|prev(ious)?/i,add:/^(\+|after|from)/i,subtract:/^(\-|before|ago)/i,yesterday:/^yesterday/i,today:/^t(oday)?/i,tomorrow:/^tomorrow/i,now:/^n(ow)?/i,millisecond:/^ms|milli(second)?s?/i,second:/^sec(ond)?s?/i,minute:/^min(ute)?s?/i,hour:/^h(ou)?rs?/i,week:/^w(ee)?k/i,month:/^m(o(nth)?s?)?/i,day:/^d(ays?)?/i,year:/^y((ea)?rs?)?/i,shortMeridian:/^(a|p)/i,longMeridian:/^(a\.?m?\.?|p\.?m?\.?)/i,timezone:/^((e(s|d)t|c(s|d)t|m(s|d)t|p(s|d)t)|((gmt)?\s*(\+|\-)\s*\d\d\d\d?)|gmt)/i,ordinalSuffix:/^\s*(st|nd|rd|th)/i,timeContext:/^\s*(\:|a|p)/i},abbreviatedTimeZoneStandard:{GMT:"-000",EST:"-0400",CST:"-0500",MST:"-0600",PST:"-0700"},abbreviatedTimeZoneDST:{GMT:"-000",EDT:"-0500",CDT:"-0600",MDT:"-0700",PDT:"-0800"}};
+        $.jMonthCalendar.Initialize(options, events);
+    });
+        </script>
+
+
+    </head>
+    <body>
+        <div id="centralizer">
+            <?php include('header.php'); ?>
+            <?php include('main-menu.php'); ?>
+
+            <!-- Content Area - Begin -->
+            <div id="agenda" class="content inner-pages">
+                <h1>Agenda IMEjr</h1>
+                <div id="body">
+                    <div id="jMonthCalendar" style="width: 100%"></div>
+                </div>
+            </div>
+            <!-- Content Area - End -->
+
+            <?php include('footer.php');?>
+        </div>
+    </body>
+</html>
+<?php Conexao::fecha_conexao($conn); ?>
